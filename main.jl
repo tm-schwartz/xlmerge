@@ -1,13 +1,11 @@
 module Merger
-export runmerge
+export main
 using REPL
 using REPL.TerminalMenus
 using DataFrames
 using DataFramesMeta
 using Debugger
 using XLSX
-# error handling
-# optimize
 
 function readXlsm(path::String)::Dict
     xf = XLSX.readxlsx(path)
@@ -15,8 +13,6 @@ function readXlsm(path::String)::Dict
     d = Dict{String,DataFrame}(nm => DataFrame(xf[nm][:], :auto) for nm in sn)
     return d
 end
-
-
 
 function getPaths()::NamedTuple
     println("Enter path to workbooks folder")
@@ -31,7 +27,7 @@ function getPaths()::NamedTuple
         println("Enter number of header rows (if known)")
         nHeaderRows = readline()
     end
-    if (isdir(pathToWorkbooks) & length(nHeaderRows) >=1)
+    if (isdir(pathToWorkbooks) & length(nHeaderRows) >= 1)
         return (workbooks = pathToWorkbooks, rowskip = parse(Int64, nHeaderRows))
     elseif (isdir(pathToWorkbooks) & length(nHeaderRows) == 0)
         return (workbooks = pathToWorkbooks,)
@@ -125,7 +121,7 @@ function runmerge(path::String, rowskip::Int64)
             filteredtabs[sheet] = vcat(filteredtabs[sheet], @linq toappend[rowskip+1:nrow(toappend), :] |> where(:x1 .!= Missing))
         end
     end
-        writeResult(filteredtabs)
+    writeResult(filteredtabs)
 end
 
 function runmerge(path::String)
