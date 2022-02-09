@@ -3,6 +3,7 @@
 Usage:
 
 <img alt="Gif" src="https://raw.githubusercontent.com/tm-schwartz/xlmerge/main/example.gif" width="80%" />
+(view example.gif for readability)
 
 ---
 
